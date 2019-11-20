@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.btn {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn:hover{
+    color: #ffffff;
+   /*background-color: #51a351;*/
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #800000;
+  padding: 40px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 25%;
+  height: 665px; /* only for demonstration, should be removed */
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 75%;
+  background-color: #f1f1f1;
+  height: 665px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  background-color: #800000;
+  padding: 10px;
+  height: 100px;
+  font-weight: 800;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>VOICE2INSIGHTS</h2>
+</header>
+
+<section>
+  <nav>
+    <ul>
+      <form method="POST" action="/text/">
+    
+        <p>
+      <button class ="btn success"> EXTRACT TEXT </button>
+        </p>
+      </form>
+
+      <form method="post" action="/smry/">
+        <p>
+      <button class ="btn success"> EXTRACT SUMMARY </button>
+        </p>
+      </form>
+
+      <form method="post" action="/key/">
+        <p>
+      <button class ="btn success"> FIND KEYWORDS </button>
+        </p>
+      </form>
+
+      <form method="post" action="/ner/">
+      <p>
+      <button class ="btn success"> EXTRACT ENTITIES </button>
+      </p>
+      </form>
+
+
+    </ul>
+  </nav>
+  
+  <article>
+  <p>
+  <div style="border:0px solid black;padding:5px;margin-top:5px;padding:5px;font: 24px/36px sans-serif;width:1200px;height:550px;overflow:scroll;">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% if messages |length == 1 %}
+      {% for output in messages %}
+        {{ output }}
+      {% endfor %}
+    {%else%}
+      {% for output in messages %}
+        {%if output == "ORG" or output == "PRODUCT" or output == "QUANTITY" or output == 'MONEY' or output == 'NONE'%}
+          <ul>{{output}}</ul>
+          <ul> </ul>
+        {%else%}
+
+          <li>{{ output }}</li>
+        {%endif%}
+      {% endfor %}
+    {%endif%}
+    </ul>
+    {% endif %}
+  {% endwith %}
+	</div>
+  </p>
+  </article>
+</section>
+
+<footer>
+  <p>PBL PROJECT</p>
+</footer>
+
+</body>
+</html>
